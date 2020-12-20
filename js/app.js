@@ -7,6 +7,7 @@ const email = document.querySelector('#email');
 const asunto = document.querySelector('#asunto');
 const mensaje = document.querySelector('#mensaje');
 
+//E-R que valida que el email tenga una sintaxis correcta.
 const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 eventListeners();
@@ -16,7 +17,12 @@ function eventListeners() {
 	email.addEventListener('keydown', validarFormulario);
 	asunto.addEventListener('blur', validarFormulario);
 	mensaje.addEventListener('blur', validarFormulario);
+
+	//Enviar email
+	formulario.addEventListener('submit', enviarEmail);
 }
+	//renicia uun formulario
+	resetBtn.addEventListener('click', resetearFormulario);
 
 //  Funciones  //
 
@@ -83,4 +89,42 @@ function mostrarError(mensaje) {
 		//se añade el child (p) al parent (div) en el HTML
 		formulario.appendChild(mensajeError);
 	}
+}
+
+function enviarEmail(e) {
+	//previene que se mande al link, solo se mostrará en la URL
+	e.preventDefault();
+
+	//Mostrar el spinner
+	const spinner = document.querySelector('#spinner');
+	spinner.style.display = 'flex';
+
+	//Despues de un segundo ocultar el spinner y mostrar el mensaje.
+	setTimeout(() => {
+		spinner.style.display = 'none';
+
+		const parrafo = document.createElement('p');
+		parrafo.textContent = 'El mensaje se envió correctamente';
+		parrafo.classList.add('text-center', 'my-10', 'p-2', 'bg-green-500', 'text-white',
+		'font-bold', 'uppercase');
+
+		formulario.insertBefore(parrafo, spinner);
+
+		setTimeout(() => {
+			parrafo.remove();
+
+			resetearFormulario();
+		}, 5000);
+
+		parrafo.remove(); //Eliminar el mensaje de exito
+	}, 1000);
+}
+
+//Funcion que resetea el formulario
+function resetearFormulario() {
+	formulario.reset();
+}
+
+function resetearFormulario() {
+	formulario.reset();
 }
