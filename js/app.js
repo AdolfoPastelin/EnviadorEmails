@@ -22,6 +22,11 @@ function validarFormulario(e) {
 
 	//validar con clases de tailwind css
 	if (e.target.value.length > 0) {
+		//elimina los errores (si es que los hay)
+		const error = document.querySelector('p.error');
+		error.remove();
+
+		e.target.classList.remove('border', 'border-red-500');
 		console.log('el campo si contiene caracteres');
 	} else {
 		e.target.classList.add('border', 'border-red-500');
@@ -30,9 +35,12 @@ function validarFormulario(e) {
 	}
 
 	if (e.target.type === 'email') {
-		const resultado = e.target.value.indexOf('@');
-		if (resultado < 0) {
-			mostrarError('El email no es valido');
+		const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+		if (er.test(e.target.value)) {
+			console.log('Email valido');
+		} else {
+			console.log('El email no es valido');
 		}
 	}
 }
