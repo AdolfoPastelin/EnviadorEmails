@@ -1,5 +1,5 @@
 //  Variables  //
-
+const formulario = document.querySelector('#enviar-mail');
 
 //  Variables para campos  //
 const email = document.querySelector('#email');
@@ -17,7 +17,6 @@ function eventListeners() {
 
 //  Funciones  //
 
-
 //Funcion que valida los campos del formulario
 function validarFormulario(e) {
 
@@ -26,8 +25,27 @@ function validarFormulario(e) {
 		console.log('el campo si contiene caracteres');
 	} else {
 		e.target.classList.add('border', 'border-red-500');
+
+		mostrarError();
 	}
 }
 
+function mostrarError() {
+	//se crea el parrafo donde estará el texto con la info del error
+	const mensajeError = document.createElement('p');
 
+	//Se asigna el texto del error
+	mensajeError.textContent = 'Todos los campos son obligatorios, no pueden quedar vacios';
 
+	//se aplican estilos al error
+	mensajeError.classList.add('border', 'border-red-500', 'background-red-100', 'text-red-500',
+		'p-3', 'mt-5', 'text-center', 'error');
+
+	//Si se desea usar la propiedad "length" se debe usar un querySelectorAll ya que
+	//con un querySelector al no contener esta propiedad disponible, arrojará un null
+	const errores = document.querySelectorAll('.error');
+	if (errores.length === 0) {
+		//se añade el child (p) al parent (div) en el HTML
+		formulario.appendChild(mensajeError);
+	}
+}
