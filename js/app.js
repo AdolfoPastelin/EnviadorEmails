@@ -1,4 +1,5 @@
 //  Variables  //
+const btnEnviar = document.querySelector('#enviar');
 const formulario = document.querySelector('#enviar-mail');
 
 //  Variables para campos  //
@@ -6,11 +7,13 @@ const email = document.querySelector('#email');
 const asunto = document.querySelector('#asunto');
 const mensaje = document.querySelector('#mensaje');
 
+const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 eventListeners();
 function eventListeners() {
 
 	//Campos del formulario
-	email.addEventListener('blur', validarFormulario);
+	email.addEventListener('keydown', validarFormulario);
 	asunto.addEventListener('blur', validarFormulario);
 	mensaje.addEventListener('blur', validarFormulario);
 }
@@ -37,7 +40,6 @@ function validarFormulario(e) {
 	}
 
 	if (e.target.type === 'email') {
-		const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		if (er.test(e.target.value)) {
 			const error = document.querySelector('p.error');
@@ -50,6 +52,16 @@ function validarFormulario(e) {
 			e.target.classList.add('border', 'border-red-500');
 			mostrarError('Email no valido');
 		}
+	}
+	
+	if (er.test(email.value) && asunto.value !== '' && mensaje.value !== '') {
+		console.log('Pasaste la validación');
+		btnEnviar.disabled = false;
+		btnEnviar.classList.remove('cursor-not-allowed', 'opacity-50');
+	} else {
+		console.log('Hay campos por validar');
+		btnEnviar.disabled = true;
+		btnEnviar.classList.add('cursor-not-allowed', 'opacity-50');
 	}
 }
 
