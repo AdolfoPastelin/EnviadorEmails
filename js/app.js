@@ -26,16 +26,23 @@ function validarFormulario(e) {
 	} else {
 		e.target.classList.add('border', 'border-red-500');
 
-		mostrarError();
+		mostrarError('Todos los campos son obligatorios, no puede quedar ni uno vacio');
+	}
+
+	if (e.target.type === 'email') {
+		const resultado = e.target.value.indexOf('@');
+		if (resultado < 0) {
+			mostrarError('El email no es valido');
+		}
 	}
 }
 
-function mostrarError() {
+function mostrarError(mensaje) {
 	//se crea el parrafo donde estará el texto con la info del error
 	const mensajeError = document.createElement('p');
 
-	//Se asigna el texto del error
-	mensajeError.textContent = 'Todos los campos son obligatorios, no pueden quedar vacios';
+	//Se asigna el texto del error y se guarda en parametro de la función "mensaje"
+	mensajeError.textContent = mensaje;
 
 	//se aplican estilos al error
 	mensajeError.classList.add('border', 'border-red-500', 'background-red-100', 'text-red-500',
