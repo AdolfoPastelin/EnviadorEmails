@@ -24,7 +24,9 @@ function validarFormulario(e) {
 	if (e.target.value.length > 0) {
 		//elimina los errores (si es que los hay)
 		const error = document.querySelector('p.error');
-		error.remove();
+		if (error) {
+			error.remove();
+		}
 
 		e.target.classList.remove('border', 'border-red-500');
 		console.log('el campo si contiene caracteres');
@@ -38,9 +40,15 @@ function validarFormulario(e) {
 		const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		if (er.test(e.target.value)) {
-			console.log('Email valido');
+			const error = document.querySelector('p.error');
+			if (error) {
+				error.remove();
+			}
+
+			e.target.classList.remove('border', 'border-red-500');
 		} else {
-			console.log('El email no es valido');
+			e.target.classList.add('border', 'border-red-500');
+			mostrarError('Email no valido');
 		}
 	}
 }
